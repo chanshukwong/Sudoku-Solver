@@ -1,4 +1,4 @@
-# Version 1.0
+# Version 1.1
 from numpy import genfromtxt
 
 def PossibleValueAtPosition(pz:[], row:int, col:int):	# possible value at (row, col)
@@ -11,15 +11,14 @@ def SudokuSolver(pz:[], n:int):
 		return True
 	(row,col) = divmod(n,9)
 	if pz[row][col]>0:								# location filled, try next location
-		if SudokuSolver(pz, n+1)==True:
-			return True							# if not return even true, will show all solutions
+		return SudokuSolver(pz, n+1)
 	else:
 		l = PossibleValueAtPosition(pz, row,col)
 		for v in l:								# if l = empty set, bypass all 
 			pz[row][col] = v						# try to fill a possible value v  
 			if SudokuSolver(pz, n+1)==True:
 				return True						# if not return even true, will show all solutions
-			pz[row][col] = 0						# unfill the value, blacktracking
+		pz[row][col] = 0							# unfill the value, blacktracking
 	return False									# try all possible but fail
 
 def main():
